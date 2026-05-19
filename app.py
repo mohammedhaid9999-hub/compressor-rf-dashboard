@@ -142,16 +142,16 @@ st.caption("Updates based on your input above")
 risk_labels = ['Low Risk', 'Moderate Risk', 'High Risk', 'Critical Risk']
 risk_colors = ['#00cc66', '#ffcc00', '#ff6600', '#cc0000']
 
-# Dynamic: current prediction counts as 1 sample
-risk_counts = [0, 0, 0, 0]
-if   risk == "Low Risk":      risk_counts[0] = 1
-elif risk == "Moderate Risk": risk_counts[1] = 1
-elif risk == "High Risk":     risk_counts[2] = 1
-else:                         risk_counts[3] = 1
-
-# Add fixed test set background distribution
-base_counts = [10535, 1, 1, 1286]
-total_counts = [risk_counts[i] + base_counts[i] for i in range(4)]
+# Show failure probability split across risk zones
+total_counts = [
+    max(0, 20 - fail_pct),          # Low Risk portion
+    max(0, min(fail_pct, 50) - 20), # Moderate Risk portion
+    max(0, min(fail_pct, 80) - 50), # High Risk portion
+    max(0, fail_pct - 80)           # Critical Risk portion
+]
+# If all zero (fail_pct=0), show full Low Risk
+if sum(total_counts) == 0:
+    total_counts = [100, 0, 0, 0]
 
 fig_donut = go.Figure(go.Pie(
     labels=risk_labels,
