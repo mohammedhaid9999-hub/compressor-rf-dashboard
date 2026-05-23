@@ -96,7 +96,7 @@ models_info = [
     (c1, "▲ Random Forest", rf_state,  rf_fail,  rf_oper,  rf_risk,  rf_color,  rf_action),
     (c2, "● ANN",           ann_state, ann_fail, ann_oper, ann_risk, ann_color, ann_action),
     (c3, "◆ SVM",           svm_state, svm_fail, svm_oper, svm_risk, svm_color, svm_action),
-    (c4, "⚡️ XGBoost",      xgb_state, xgb_fail, xgb_oper, xgb_risk, xgb_color, xgb_action),
+    (c4, "⚡ XGBoost",      xgb_state, xgb_fail, xgb_oper, xgb_risk, xgb_color, xgb_action),
 ]
 
 for col, name, state, fail, oper, risk, color, action in models_info:
@@ -130,7 +130,7 @@ r2_info = [
     (rc1, "▲ Random Forest", 0.9974, 0.0160, "#00cc88"),
     (rc2, "● ANN",           0.9977, 0.0151, "#44aaff"),
     (rc3, "◆ SVM",           0.9968, 0.0177, "#ffcc00"),
-    (rc4, "⚡️ XGBoost",      0.9950, 0.0220, "#ff4444"),
+    (rc4, "⚡ XGBoost",      0.9950, 0.0220, "#ff4444"),
 ]
 for col, name, r2, rmse, color in r2_info:
     col.markdown(f"""
@@ -147,7 +147,7 @@ st.divider()
 # ── Performance Table ─────────────────────────────────────
 st.markdown("### MODEL PERFORMANCE COMPARISON")
 perf_df = pd.DataFrame({
-    'MODEL':      ['▲ Random Forest','● ANN','◆ SVM','⚡️ XGBoost'],
+    'MODEL':      ['▲ Random Forest','● ANN','◆ SVM','⚡ XGBoost'],
     'R² TRAIN':   [0.9998, 0.9996, 0.9987, 0.9978],
     'R² VAL':     [0.9989, 0.9979, 0.9947, 0.9980],
     'R² TEST':    [0.9974, 0.9977, 0.9968, 0.9950],
@@ -210,8 +210,8 @@ def donut_values(fail_pct):
     if (low+moderate+high+critical) == 0:
         return [100,0,0,0]
     return [low, moderate, high, critical]
-    
-  d1, d2, d3, d4 = st.columns(4)
+
+d1, d2, d3, d4 = st.columns(4)
 donut_data = [
     (d1, "Random Forest", rf_fail),
     (d2, "ANN",           ann_fail),
@@ -297,13 +297,13 @@ else:
 
 bl1, bl2 = st.columns(2)
 bl1.markdown(f"""
-Baseline Rule (SCADA-derived thresholds):
+*Baseline Rule (SCADA-derived thresholds):*
 - IF Power Factor < {pf_thresh} → Failure
 - OR Vibration < {vib_thresh} → Failure
 - OR Temperature < {temp_thresh} → Failure
 - ELSE → Operational
 """)
 bl2.markdown(f"""
-Baseline Prediction:
+*Baseline Prediction:*
 <span style='color:{b_color}; font-size:22px; font-weight:bold'>{b_pred}</span>
-""", unsafe_allow_html=True)  
+""", unsafe_allow_html=True)
