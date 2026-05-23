@@ -210,6 +210,7 @@ def donut_values(fail_pct):
     if (low+moderate+high+critical) == 0:
         return [100,0,0,0]
     return [low, moderate, high, critical]
+    
   d1, d2, d3, d4 = st.columns(4)
 donut_data = [
     (d1, "Random Forest", rf_fail),
