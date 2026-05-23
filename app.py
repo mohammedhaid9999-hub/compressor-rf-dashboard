@@ -93,16 +93,25 @@ st.markdown("### PREDICTION RESULTS — ALL MODELS")
 c1, c2, c3, c4 = st.columns(4)
 
 models_info = [
-    (c1, "▲ Random Forest", rf_state,  rf_fail,  rf_oper,  rf_risk,  rf_color,  rf_action),
-    (c2, "● ANN",           ann_state, ann_fail, ann_oper, ann_risk, ann_color, ann_action),
-    (c3, "◆ SVM",           svm_state, svm_fail, svm_oper, svm_risk, svm_color, svm_action),
-    (c4, "⚡ XGBoost",      xgb_state, xgb_fail, xgb_oper, xgb_risk, xgb_color, xgb_action),
+    (c1, "▲ Random Forest", rf_state,  rf_fail,  rf_oper,  rf_risk,  rf_color,  rf_action,  True),
+    (c2, "● ANN",           ann_state, ann_fail, ann_oper, ann_risk, ann_color, ann_action, False),
+    (c3, "◆ SVM",           svm_state, svm_fail, svm_oper, svm_risk, svm_color, svm_action, False),
+    (c4, "⚡️ XGBoost",      xgb_state, xgb_fail, xgb_oper, xgb_risk, xgb_color, xgb_action, False),
 ]
 
-for col, name, state, fail, oper, risk, color, action in models_info:
-    state_color = "#00ff99" if state == "Operational" else "#ff4444"
+for col, name, state, fail, oper, risk, color, action, is_optimal in models_info:
+    state_color  = "#00ff99" if state == "Operational" else "#ff4444"
+    optimal_badge = """
+        <div style="background:#ffd700; color:#000; padding:3px 10px;
+                    border-radius:20px; font-size:11px; font-weight:bold;
+                    display:inline-block; margin-bottom:6px">
+            ⭐️ OPTIMAL MODEL
+        </div><br>
+    """ if is_optimal else ""
+    border_style = "border: 2px solid #ffd700;" if is_optimal else "border: 1px solid #333;"
     col.markdown(f"""
-    <div class="model-card">
+    <div class="model-card" style="{border_style}">
+        {optimal_badge}
         <p style="color:#aaa; font-size:13px; margin-bottom:4px">{name}</p>
         <p style="color:{state_color}; font-size:20px;
                   font-weight:bold; margin:4px 0">{state}</p>
